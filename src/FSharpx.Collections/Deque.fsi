@@ -1,4 +1,4 @@
-﻿namespace FSharpx.Collections
+namespace FSharpx.Collections
 
 /// Double-ended queue is an ordered linear linear structure implementing the signature of List
 /// (head, tail, cons) as well as the mirror-image Vector signature (last, initial, conj). "head" inspects
@@ -85,6 +85,15 @@ module Deque =
 
     ///O(n). Applies a function to each element of the deque, threading an accumulator argument through the computation, right to left
     val foldBack : ('T -> 'State -> 'State) -> Deque<'T> -> 'State -> 'State
+
+    ///O(n). Applies a function to each element of the queue
+    val map : ('T -> 'U) -> Deque<'T> -> Deque<'U>
+
+    ///O(n). Returns a new queue with the elements that satisfy the predicate.
+    val filter : ('T -> bool) -> Deque<'T> -> Deque<'T>
+
+    ///O(n). Returns the reduced value of the elements.
+    val reduce : ('T -> 'T -> 'T) -> Deque<'T> -> 'T
 
     ///O(1) amortized, O(n), worst case. Returns the first element.
     val inline head : Deque<'T> -> 'T

@@ -1,4 +1,4 @@
-﻿// XML docs in fsi
+// XML docs in fsi
 
 namespace FSharpx.Collections
 
@@ -123,6 +123,24 @@ module Queue =
     let foldBack (f: ('T -> 'State -> 'State)) (q: Queue<'T>) (state: 'State) =
         let s = List.foldBack f (List.rev q.rBack) state
         (List.foldBack f q.front s)
+
+    let map (f:('T -> 'U)) (q:Queue<_>) =
+        let front = List.map f q.front
+        let rBack = List.map f q.rBack
+        Queue(front, rBack)
+
+    let reduce (f: ('T -> 'T -> 'T)) (q: Queue<'T>) =
+        let frontlen, backlen = q.front.Length, q.rBack.Length
+        match frontlen, backlen with
+        | 0, 0 -> failwith "Deque is empty"
+        | 0, _ -> List.reduce f q.rBack
+        | _, 0 -> List.reduce f q.front
+        | _ -> f (List.reduce f q.front) (List.reduce f (List.rev q.rBack))   
+
+    let filter (predicate: ('T -> bool)) (q: Queue<'T>) =
+        let front = List.filter predicate q.front
+        let rBack = List.filter predicate q.rBack
+        Queue(front, rBack)
 
     let inline head(q: Queue<'T>) = q.Head
 

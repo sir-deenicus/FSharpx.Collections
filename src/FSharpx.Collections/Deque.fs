@@ -1,4 +1,4 @@
-﻿//inspired by, and init and tail algorithms from, BatchedDeque http://fssnip.net/dJ
+//inspired by, and init and tail algorithms from, BatchedDeque http://fssnip.net/dJ
 
 namespace FSharpx.Collections
 
@@ -125,7 +125,7 @@ type Deque<'T>(front, rBack) =
             Array.blit a rBackA.Length frontA 0 frontA.Length
             let frontA' = Array.rev frontA
             Some(Deque(List.ofArray frontA', List.ofArray rBackA))
-
+    
     member this.Uncons =
         match front, rBack with
         | [], [] -> raise(new System.Exception("Deque is empty"))
@@ -197,6 +197,24 @@ module Deque =
     let foldBack (f: ('T -> 'State -> 'State)) (q: Deque<'T>) (state: 'State) =
         let s = List.foldBack f (List.rev q.rBack) state
         (List.foldBack f q.front s)
+
+    let map (f:('T -> 'U)) (q:Deque<_>) =
+        let front = List.map f q.front
+        let rBack = List.map f q.rBack
+        Deque(front, rBack)
+
+    let filter (predicate: ('T -> bool)) (q: Deque<'T>) =
+        let front = List.filter predicate q.front
+        let rBack = List.filter predicate q.rBack
+        Deque(front, rBack)
+
+    let reduce (f: ('T -> 'T -> 'T)) (q: Deque<'T>) =
+        let frontlen, backlen = q.front.Length, q.rBack.Length
+        match frontlen, backlen with
+        | 0, 0 -> failwith "Deque is empty"
+        | 0, _ -> List.reduce f q.rBack
+        | _, 0 -> List.reduce f q.front
+        | _ -> f (List.reduce f q.front) (List.reduce f (List.rev q.rBack))        
 
     let inline head(q: Deque<'T>) = q.Head
 

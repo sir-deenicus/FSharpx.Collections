@@ -1,4 +1,4 @@
-﻿namespace FSharpx.Collections
+namespace FSharpx.Collections
 
 /// Queue is an ordered linear data structure where elements are added at the end (right)
 /// and inspected and removed at the beginning (left). Ordering is by insertion history.
@@ -57,6 +57,15 @@ module Queue =
 
     ///O(n). Applies a function to each element of the queue, threading an accumulator argument through the computation, left to right.
     val fold : ('State -> 'T -> 'State) -> 'State -> Queue<'T> -> 'State
+
+    ///O(n). Applies a function to each element of the queue
+    val map : ('T -> 'U) -> Queue<'T> -> Queue<'U>
+
+    ///O(n). Returns a new queue with the elements that satisfy the predicate.
+    val filter : ('T -> bool) -> Queue<'T> -> Queue<'T>
+
+    ///O(n). Returns the reduced value of the elements.
+    val reduce : ('T -> 'T -> 'T) -> Queue<'T> -> 'T
 
     ///O(n). Applies a function to each element of the queue, threading an accumulator argument through the computation, right to left.
     val foldBack : ('T -> 'State -> 'State) -> Queue<'T> -> 'State -> 'State

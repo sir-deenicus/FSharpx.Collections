@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -11,6 +11,8 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>FSharpx.Collections</Title>
   </PropertyGroup>
   <!-- Add source files to "fable" folder in Nuget package -->
   <ItemGroup>
@@ -47,5 +49,5 @@
     <Compile Include="PersistentHashMap.fs" />
     <Compile Include="TaggedCollections.fs" />
   </ItemGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
+  <!--<Import Project="..\..\.paket\Paket.Restore.targets" />-->
 </Project>
